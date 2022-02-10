@@ -83,6 +83,7 @@ post("/token") do
       			parameterObject = { 
 				grant_type: grant_type,
 				client_id: client_id,
+				domain: domain,
 				client_secret: client_secret,
 				code: code,
 				redirect_uri: redirect_uri

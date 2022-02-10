@@ -65,6 +65,7 @@ $(document).ready(function() {
       // validate and process form here
       var token_endpoint = document.getElementById("token_endpoint").value;
       var client_id = document.getElementById("token_client_id").value;
+      var domain = document.getElementById("domain").value;
       var client_secret = document.getElementById("token_client_secret").value;
       var code = document.getElementById("code").value;
       var grant_type = document.getElementById("token_grant_type").value;
@@ -87,6 +88,7 @@ $(document).ready(function() {
         formData = {
           grant_type: grant_type,
           client_id: client_id,
+          domain: domain,
           code: code,
           redirect_uri: redirect_uri,
           scope: scope,
@@ -593,6 +595,7 @@ function loadValuesFromLocalStorage()
   document.getElementById("token_endpoint").value = localStorage.getItem("token_endpoint");
   document.getElementById("redirect_uri").value = localStorage.getItem("redirect_uri");
   document.getElementById("client_id").value = localStorage.getItem("client_id");
+  document.getElementById("domain").value = localStorage.getItem("domain");
   document.getElementById("scope").value = localStorage.getItem("scope");
   document.getElementById("resource").value = localStorage.getItem("resource");
   document.getElementById("token_client_id").value = localStorage.getItem("token_client_id");
@@ -801,6 +804,7 @@ function recalculateAuthorizationRequestDescription()
                                                                       "state=" + document.getElementById("state").value + "&" + "\n" +
   								      "response_type=" + document.getElementById("response_type").value + "&" + "\n" +
   								      "client_id=" + document.getElementById("client_id").value + "&" + "\n" +
+                        "domain=" + document.getElementById("domain").value + "&" + "\n" +
                 						      "redirect_uri=" + document.getElementById("redirect_uri").value + "&" +"\n" +
 								      "scope=" + document.getElementById("scope").value + "\n" +
                                                                       resourceComponent + "\n";
@@ -848,6 +852,7 @@ function recalculateTokenRequestDescription()
                                                                       "grant_type=" + document.getElementById("token_grant_type").value + "&" + "\n" +
                                                                       "code=" + document.getElementById("code").value + "&" + "\n" +
                                                                       "client_id=" + document.getElementById("token_client_id").value + "&" + "\n" +
+                                                                      "domain=" + document.getElementById("token_domain").value + "&" + "\n" +
                                                                       "redirect_uri=" + document.getElementById("token_redirect_uri").value + "&" +"\n" +
                                                                       "scope=" + document.getElementById("token_scope").value + "\n" + 
                                                            	      resourceComponent + "\n";
@@ -931,6 +936,7 @@ window.onload = function() {
   document.getElementById("nonce_field").addEventListener("onkeypress", recalculateAuthorizationRequestDescription());
   document.getElementById("response_type").addEventListener("onkeypress", recalculateAuthorizationRequestDescription());
   document.getElementById("client_id").addEventListener("onkeypress", recalculateAuthorizationRequestDescription());
+  document.getElementById("domain").addEventListener("onkeypress", recalculateAuthorizationRequestDescription());
   document.getElementById("redirect_uri").addEventListener("onkeypress", recalculateAuthorizationRequestDescription());
   document.getElementById("scope").addEventListener("onkeypress", recalculateAuthorizationRequestDescription());
   document.getElementById("resource").addEventListener("onkeypress", recalculateAuthorizationRequestDescription());
@@ -944,6 +950,7 @@ window.onload = function() {
     document.getElementById("auth_step").addEventListener("submit", function() {
       console.log("Entering auth_step submit event listner function.");
       localStorage.setItem("client_id", document.getElementById("client_id").value);
+      localStorage.setItem("domain", document.getElementById("domain").value);
       localStorage.setItem("scope", document.getElementById("scope").value);
       localStorage.setItem("authorization_endpoint", document.getElementById("authorization_endpoint").value);
       localStorage.setItem("token_endpoint", document.getElementById("token_endpoint").value);
