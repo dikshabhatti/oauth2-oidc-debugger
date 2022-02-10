@@ -65,7 +65,7 @@ $(document).ready(function() {
       // validate and process form here
       var token_endpoint = document.getElementById("token_endpoint").value;
       var client_id = document.getElementById("token_client_id").value;
-      var domain = document.getElementById("domain").value;
+      var domain = document.getElementById("token_domain").value;
       var client_secret = document.getElementById("token_client_secret").value;
       var code = document.getElementById("code").value;
       var grant_type = document.getElementById("token_grant_type").value;
@@ -135,6 +135,7 @@ $(document).ready(function() {
   $.ajax({
     type: "POST",
     url: "/token",
+    headers: {"x-oauth-identity-domain-name": domain},
     data: formData,
     success: function(data, textStatus, request) {
       var token_endpoint_result_html = "";
@@ -238,6 +239,7 @@ $(".refresh_btn").click(function() {
     type: "POST",
     url: "/token",
     data: formData,
+    headers: {"x-oauth-identity-domain-name": domain},
     success: function(data, textStatus, request) {
       var refresh_endpoint_result_html = "";
       console.log("displayOpenIDConnectArtifacts=" + displayOpenIDConnectArtifacts);
@@ -559,6 +561,7 @@ function writeValuesToLocalStorage()
   console.log("Entering writeValuesToLocalStorage().");
   if (localStorage) {
       localStorage.setItem("token_client_id", document.getElementById("token_client_id").value);
+      localStorage.setItem("token_domain", document.getElementById("token_domain").value);
       localStorage.setItem("token_client_secret", document.getElementById("token_client_secret").value);
       localStorage.setItem("token_redirect_uri", document.getElementById("token_redirect_uri").value);
       localStorage.setItem("token_username", document.getElementById("token_username").value);
@@ -599,6 +602,7 @@ function loadValuesFromLocalStorage()
   document.getElementById("scope").value = localStorage.getItem("scope");
   document.getElementById("resource").value = localStorage.getItem("resource");
   document.getElementById("token_client_id").value = localStorage.getItem("token_client_id");
+  document.getElementById("token_domain").value = localStorage.getItem("token_domain");
   document.getElementById("token_client_secret").value = localStorage.getItem("token_client_secret");
   document.getElementById("token_redirect_uri").value = localStorage.getItem("token_redirect_uri");
   document.getElementById("token_scope").value = localStorage.getItem("token_scope");
@@ -852,7 +856,6 @@ function recalculateTokenRequestDescription()
                                                                       "grant_type=" + document.getElementById("token_grant_type").value + "&" + "\n" +
                                                                       "code=" + document.getElementById("code").value + "&" + "\n" +
                                                                       "client_id=" + document.getElementById("token_client_id").value + "&" + "\n" +
-                                                                      "domain=" + document.getElementById("token_domain").value + "&" + "\n" +
                                                                       "redirect_uri=" + document.getElementById("token_redirect_uri").value + "&" +"\n" +
                                                                       "scope=" + document.getElementById("token_scope").value + "\n" + 
                                                            	      resourceComponent + "\n";
