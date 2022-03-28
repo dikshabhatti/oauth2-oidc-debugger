@@ -29,6 +29,7 @@ post("/token") do
 		grant_type = params[:grant_type]
       		token_endpoint = params[:token_endpoint]
       		client_id = params[:client_id]
+      		domain = params[:domain]
       		client_secret = params[:client_secret]
  		redirect_uri = ""
 		code = ""
@@ -71,6 +72,7 @@ post("/token") do
 		else
 			puts "client_secret=''"
 		end
+		puts "domain="+ domain
 		puts "code=" + code
  		puts "grant_type=" + grant_type
 		puts "redirect_uri=" + redirect_uri
