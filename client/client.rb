@@ -29,8 +29,8 @@ post("/token") do
 		grant_type = params[:grant_type]
       		token_endpoint = params[:token_endpoint]
       		client_id = params[:client_id]
-      		domain = params[:domain]
       		client_secret = params[:client_secret]
+      		domain = params[:domain]
  		redirect_uri = ""
 		code = ""
 		username = ""
@@ -72,7 +72,6 @@ post("/token") do
 		else
 			puts "client_secret=''"
 		end
-		puts "domain="+ domain
 		puts "code=" + code
  		puts "grant_type=" + grant_type
 		puts "redirect_uri=" + redirect_uri
@@ -85,7 +84,6 @@ post("/token") do
       			parameterObject = { 
 				grant_type: grant_type,
 				client_id: client_id,
-				domain: domain,
 				client_secret: client_secret,
 				code: code,
 				redirect_uri: redirect_uri
@@ -119,7 +117,8 @@ post("/token") do
 			parameterObject[:scope] = scope
 		end
                 puts "parameterObject=" + parameterObject.to_s
-                api_result = RestClient::Request.execute(method: :post, url: params[:token_endpoint], payload: parameterObject, verify_ssl: sslValidate)
+
+                api_result = RestClient::Request.execute(method: :post, url: params[:token_endpoint], payload: parameterObject, verify_ssl: sslValidate, headers: {'x-oauth-identity-domain-name': domain})
         	oauth2_token_response = JSON.parse(api_result)
 		puts api_result
 		content_type :json
